@@ -1,0 +1,12 @@
+{
+  "name": "hackathon-trackstar",
+  "displayName": "hackathon-trackstar",
+  "expo": {
+    "name": "hackathon-trackstar",
+    "slug": "hackathon-trackstar",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
