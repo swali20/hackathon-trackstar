@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 
 // auth and api routes
-// app.use("/auth", require("./auth"));
+app.use("/auth", require("./auth"));
 app.use("/api", require("./api"));
 
 // static file-serving middleware
