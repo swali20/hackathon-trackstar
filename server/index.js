@@ -2,8 +2,12 @@ const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const compression = require("compression");
+const session = require("express-session");
+const passport = require("passport");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const { db } = require("./db");
-const PORT = process.env.PORT || 3000;
+const sessionStore = new SequelizeStore({ db });
+const PORT = process.env.PORT || 1234;
 const app = express();
 module.exports = app;
 
@@ -16,6 +20,18 @@ app.use(express.urlencoded({ extended: true }));
 
 // compression middleware
 app.use(compression());
+
+// session middleware with passport
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "candles will always be lit",
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // auth and api routes
 app.use("/auth", require("./auth"));
