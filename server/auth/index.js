@@ -2,18 +2,17 @@ const router = require("express").Router();
 const User = require("../db/models/User");
 module.exports = router;
 
-router.post("/login", async (req, res, next) => {
+router.get("/login", async (req, res, next) => {
   try {
-    const user = await User.findOne({ where: { email: req.body.email } });
-    if (!user) {
-      console.log("No such user found:", req.body.email);
-      res.status(401).send("Wrong username and/or password");
-    } else if (!user.correctPassword(req.body.password)) {
-      console.log("Incorrect password for user:", req.body.email);
-      res.status(401).send("Wrong username and/or password");
-    } else {
-      req.login(user, (err) => (err ? next(err) : res.json(user)));
-    }
+    const scopes = "user-read-recently-played";
+    const redirect_uri = "https://localhost:1234";
+    res.redirect(
+      "https://accounts.spotify.com/authorize" +
+        "?response_type=code" +
+        "&client_id=442c255450ab441a82f1761a46b6ba48" +
+        scopes +
+        redirect_uri
+    );
   } catch (err) {
     next(err);
   }
@@ -41,5 +40,3 @@ router.post("/logout", (req, res) => {
 router.get("/me", (req, res) => {
   res.json(req.user);
 });
-
-router.use("/google", require("./google"));
