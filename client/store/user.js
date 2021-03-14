@@ -1,11 +1,11 @@
 import axios from "axios";
 import authHandler from "../../util/authHandler";
-const { User } = require("../../server/db");
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // ACTION TYPES
 const GOT_USER = "GOT_USER";
 // INITIAL STATE
-const defaultUser = {};
+const defaultUser = "";
 
 // ACTION CREATORS
 export const gotUser = (user) => ({
@@ -14,17 +14,30 @@ export const gotUser = (user) => ({
 });
 
 // THUNK CREATORS
-export const login = () => async (dispatch) => {
+export const login = (username) => async (dispatch) => {
   try {
-    const { accessToken } = await authHandler.onLogin();
-    console.log("token in login thunk", accessToken);
-    const user = await User.findOrCreate({
-      where: {
-        spotifyId: accessToken,
-      },
-    });
-    console.log("user in thunk after findOrCreate", user);
-    dispatch(gotUser(user));
+    const res = await authHandler.onLogin();
+    console.log(res);
+    if (!res.accessToken) throw new Error("Authorization error");
+    // convert user data to string for AsyncStorage compatibility
+    const user = JSON.stringify(res);
+    console.log(user);
+    // save username and user data to local storage
+    await AsyncStorage.setItem("username", username);
+    await AsyncStorage.setItem("userData", user);
+
+    // save username to store
+    dispatch(gotUser(username));
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
+export const me = () => async (dispatch) => {
+  try {
+    const username = await AsyncStorage.getItem("username");
+
+    dispatch(gotUser(username));
   } catch (err) {
     console.error(err.message);
   }
