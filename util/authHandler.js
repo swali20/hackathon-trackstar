@@ -18,7 +18,6 @@ class AuthenticationHandler {
     try {
       console.log("im about to authorize");
       const result = await authorize(this.spotifyAuthConfig);
-      console.log(result);
       return result;
     } catch (error) {
       console.log(JSON.stringify(error));

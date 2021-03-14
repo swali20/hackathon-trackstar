@@ -1,4 +1,3 @@
-import axios from "axios";
 import authHandler from "../../util/authHandler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -28,7 +27,7 @@ export const login = (username) => async (dispatch) => {
     // save username and user data to local storage
     await AsyncStorage.setItem("username", username);
     await AsyncStorage.setItem("token", token);
-    // get the token the API call
+    // get the token for the API call
     const { accessToken } = JSON.parse(await AsyncStorage.getItem("token"));
 
     const user = await fetch("https://api.spotify.com/v1/me", {
