@@ -1,5 +1,5 @@
 // Models
-const User = require("./user");
+const User = require("./User");
 
 // Associations
 
