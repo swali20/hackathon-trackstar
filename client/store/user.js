@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // ACTION TYPES
 const GOT_USER = "GOT_USER";
+const REMOVED_USER = "REMOVED_USER";
 // INITIAL STATE
 const defaultUser = "";
 
@@ -13,15 +14,17 @@ export const gotUser = (user) => ({
   user,
 });
 
+export const removedUser = () => ({
+  type: REMOVED_USER,
+});
+
 // THUNK CREATORS
 export const login = (username) => async (dispatch) => {
   try {
     const res = await authHandler.onLogin();
-    console.log(res);
     if (!res.accessToken) throw new Error("Authorization error");
     // convert user data to string for AsyncStorage compatibility
     const user = JSON.stringify(res);
-    console.log(user);
     // save username and user data to local storage
     await AsyncStorage.setItem("username", username);
     await AsyncStorage.setItem("userData", user);
@@ -43,12 +46,23 @@ export const me = () => async (dispatch) => {
   }
 };
 
+export const logout = () => async (dispatch) => {
+  try {
+    await AsyncStorage.clear();
+    dispatch(removedUser());
+  } catch (err) {
+    console.error(err.message);
+  }
+};
+
 // REDUCER
 
 export default function (state = defaultUser, action) {
   switch (action.type) {
     case GOT_USER:
       return action.user;
+    case REMOVED_USER:
+      return defaultUser;
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Text, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { login } from "../store";
 
@@ -20,14 +20,15 @@ class Login extends Component {
   render() {
     const { login } = this.props;
     const { username } = this.state;
-    console.log("login props", this.props);
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={{ color: "white" }}>what should we call you?</Text>
+        <></>
         <TextInput
           autoCapitalize="none"
           onChangeText={(text) => this.handleUsernameInput(text)}
           placeholder="username"
+          style={{ color: "white" }}
         />
         <Button
           onPress={() => {
@@ -40,6 +41,14 @@ class Login extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 const mapState = (state) => ({
   user: state.user,
