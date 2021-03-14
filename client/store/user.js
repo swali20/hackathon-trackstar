@@ -24,15 +24,31 @@ export const login = (username) => async (dispatch) => {
     const res = await authHandler.onLogin();
     if (!res.accessToken) throw new Error("Authorization error");
     // convert user data to string for AsyncStorage compatibility
-    const user = JSON.stringify(res);
+    const token = JSON.stringify(res);
     // save username and user data to local storage
     await AsyncStorage.setItem("username", username);
-    await AsyncStorage.setItem("userData", user);
+    await AsyncStorage.setItem("token", token);
+    // get the token the API call
+    const { accessToken } = JSON.parse(await AsyncStorage.getItem("token"));
+
+    const user = await fetch("https://api.spotify.com/v1/me", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    // store user spotify information in local storage
+    await AsyncStorage.setItem("spotifyData", JSON.stringify(user));
+
+    const { id } = await user.json();
 
     // save username to store
-    dispatch(gotUser(username));
+    dispatch(gotUser({ id, username }));
   } catch (err) {
-    console.error(err.message);
+    console.log(err.message);
   }
 };
 

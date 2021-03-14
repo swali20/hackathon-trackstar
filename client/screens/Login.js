@@ -20,6 +20,7 @@ class Login extends Component {
   render() {
     const { login } = this.props;
     const { username } = this.state;
+
     return (
       <View style={styles.container}>
         <Text style={{ color: "white" }}>what should we call you?</Text>

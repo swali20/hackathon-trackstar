@@ -3,8 +3,8 @@ import { View, Text, Button, Alert } from "react-native";
 import { connect } from "react-redux";
 import { logout } from "../store";
 
-function Profile({ logout }) {
-  console.log(logout);
+function Profile({ logout, user }) {
+  console.log("user in profile", user);
   const handleLogout = () => {
     Alert.alert(
       "Logout",
@@ -12,7 +12,7 @@ function Profile({ logout }) {
       [
         {
           text: "Leave",
-          onPress: async () => await logout(),
+          onPress: () => logout(),
         },
         { text: "Stay" },
       ],
@@ -34,7 +34,7 @@ const mapState = (state) => ({
 });
 
 const mapDispatch = (dispatch) => ({
-  logout: () => dispatch(logout()),
+  logout: async () => await dispatch(logout()),
 });
 
 export default connect(mapState, mapDispatch)(Profile);
