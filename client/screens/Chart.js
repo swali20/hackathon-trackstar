@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { Text } from "galio-framework";
-import { cos } from "react-native-reanimated";
 import { connect } from "react-redux";
 import { getHistory } from "../store/playHistory";
 import { ChartList } from "../components";

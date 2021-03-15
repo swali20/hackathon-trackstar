@@ -16,7 +16,6 @@ export const getHistory = () => async (dispatch) => {
   try {
     // get the token for the API call
     const { accessToken } = JSON.parse(await AsyncStorage.getItem("token"));
-    console.log(accessToken);
 
     const history = await fetch(
       "https://api.spotify.com/v1/me/player/recently-played?limit=40",
@@ -39,7 +38,7 @@ export const getHistory = () => async (dispatch) => {
     // save play history to store
     dispatch(gotHistory(stateHistory));
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
 };
 

@@ -109,12 +109,3 @@ export default function ChartList({ tracks }) {
     <Text>Loading</Text>
   );
 }
-
-{
-  /* {
-  topTen.map((artist) => {
-    console.log(artist);
-    return <ChartEntry />;
-  });
-} */
-}

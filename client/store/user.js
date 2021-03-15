@@ -47,7 +47,7 @@ export const login = (username) => async (dispatch) => {
     // save username to store
     dispatch(gotUser({ id, username }));
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
 };
 
