@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { Login } from "./screens";
 import { me, logout } from "./store";
 import { Tab } from "./routes";
-
 import React, { Component } from "react";
 import { getHistory } from "./store/playHistory";
 
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
 });
 
 const mapState = (state) => ({
-  isLoggedIn: state.user ? true : false,
+  isLoggedIn: state.user.username ? true : false,
 });
 
 const mapDispatch = (dispatch) => ({

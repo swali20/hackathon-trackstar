@@ -7,6 +7,12 @@ import Client from "./client";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 
+// fonts
+const heading1 = require("./node_modules/@expo-google-fonts/dosis/Dosis_800ExtraBold.ttf");
+
+const content = require("./node_modules/@expo-google-fonts/dosis/Dosis_400Regular.ttf");
+const subcontent = require("./node_modules/@expo-google-fonts/dosis/Dosis_200ExtraLight.ttf");
+
 export default function App() {
   return (
     <NavigationContainer>

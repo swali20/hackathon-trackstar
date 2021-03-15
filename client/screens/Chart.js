@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
+import { Text } from "galio-framework";
 import { cos } from "react-native-reanimated";
 import { connect } from "react-redux";
 import { getHistory } from "../store/playHistory";
 import { ChartList } from "../components";
+import { NavBar } from "galio-framework";
 
 class Chart extends Component {
   constructor() {
@@ -39,20 +41,62 @@ class Chart extends Component {
   }
   render() {
     const { user } = this.props;
-    console.log(this.state.tracks.length);
+
     return (
-      <ScrollView>
-        <Text>Welcome, {user.username}</Text>
-        <Text>Your Top Ten:</Text>
-        {this.state.tracks[39] ? (
-          <ChartList tracks={this.state.tracks} />
-        ) : (
-          <Text>Chart Loading</Text>
-        )}
-      </ScrollView>
+      <>
+        <NavBar
+          style={{
+            position: "relative",
+            backgroundColor: "black",
+            borderBottomColor: "grey",
+            borderBottomWidth: 0.5,
+            opacity: 1,
+          }}
+          title={
+            <Text
+              style={{
+                fontSize: 22,
+                color: "white",
+                fontVariant: ["small-caps"],
+              }}
+            >
+              chart
+            </Text>
+          }
+        />
+        <ScrollView style={styles.container}>
+          <Text h4 color="white" style={{ textAlign: "center" }}>
+            {user.username
+              ? `welcome, ${user.username.toLowerCase()}`
+              : "welcome"}
+          </Text>
+          <Text p italic={true} muted={true}>
+            your top ten:
+          </Text>
+          {this.state.tracks[39] ? (
+            <ChartList tracks={this.state.tracks} />
+          ) : (
+            <Text h3 italic={true} muted={true}>
+              chart loading...
+            </Text>
+          )}
+        </ScrollView>
+      </>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "black",
+    color: "white",
+  },
+  welcome: {
+    color: "white",
+    fontSize: 32,
+    textAlign: "center",
+  },
+});
 
 const mapState = (state) => ({
   user: state.user,

@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, Button, Alert } from "react-native";
 import { connect } from "react-redux";
 import { logout } from "../store";
+import { NavBar } from "galio-framework";
 
 function Profile({ logout, user }) {
-  console.log("user in profile", user);
   const handleLogout = () => {
     Alert.alert(
       "Logout",
@@ -22,10 +22,38 @@ function Profile({ logout, user }) {
     );
   };
   return (
-    <View>
-      <Text>Profile Screen</Text>
-      <Button onPress={() => handleLogout()} title="Logout" />
-    </View>
+    <>
+      <NavBar
+        style={{
+          position: "relative",
+          backgroundColor: "black",
+          borderBottomColor: "grey",
+          borderBottomWidth: 0.5,
+          opacity: 1,
+        }}
+        title={
+          <Text
+            style={{
+              fontSize: 22,
+              color: "white",
+              fontVariant: ["small-caps"],
+            }}
+          >
+            profile
+          </Text>
+        }
+      />
+      <View
+        style={{
+          backgroundColor: "black",
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button onPress={() => handleLogout()} title="Logout" />
+      </View>
+    </>
   );
 }
 
