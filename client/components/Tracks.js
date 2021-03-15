@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getHistory } from "../store/playHistory";
 import { View, Text, Image } from "react-native";
+import { Card } from "galio-framework";
 import { connect } from "react-redux";
 
 class Tracks extends Component {
@@ -30,21 +31,23 @@ class Tracks extends Component {
 
   render() {
     const { tracks } = this.props;
-    const imageUrl = tracks[0].albumImageUrl;
-    console.log(tracks[0].albumImageUrl);
     // return <Text>Track</Text>;
     return tracks ? (
       tracks.map((track) => (
-        <View key={this.keyGenerator.next().value}>
-          <Image
-            source={{ uri: imageUrl }}
-            style={{ height: 300, width: 300 }}
-          />
-          <Text> {`${track.name} - ${track.album}`} </Text>
-        </View>
+        <Card
+          key={this.keyGenerator.next().value}
+          title={track.name.toLowerCase()}
+          titleColor={this.props.color ? this.props.color : "grey"}
+          caption={track.album.toLowerCase()}
+          image={track.albumImageUrl}
+          imageStyle={{ height: 300, width: 300, borderRadius: 10 }}
+          borderless
+          shadow
+          imageBlockStyle={{ padding: 8 }}
+        />
       ))
     ) : (
-      <TexT></TexT>
+      <Text>loading...</Text>
     );
   }
 }

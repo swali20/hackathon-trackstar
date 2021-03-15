@@ -21,7 +21,6 @@ target 'hackathontrackstar' do
   #  post_install do |installer|
   #    flipper_post_install(installer)
   #  end
-  pod 'RealmJS', :path => '../node_modules/realm'
 
   post_install do |installer|
     installer.pods_project.targets.each do |target|

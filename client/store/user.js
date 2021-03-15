@@ -54,7 +54,6 @@ export const login = (username) => async (dispatch) => {
 export const me = () => async (dispatch) => {
   try {
     const username = await AsyncStorage.getItem("username");
-
     dispatch(gotUser(username));
   } catch (err) {
     console.error(err.message);

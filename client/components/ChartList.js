@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
+import { Text } from "galio-framework";
+
 import ChartEntry from "./ChartEntry";
 
 export default function ChartList({ tracks }) {
@@ -13,8 +15,6 @@ export default function ChartList({ tracks }) {
     }
   }
 
-  const keyGenerator = key();
-
   function* position() {
     let id = 1;
 
@@ -26,6 +26,26 @@ export default function ChartList({ tracks }) {
   }
 
   const positionGenerator = position();
+
+  function* color() {
+    let color;
+    yield "#F2C98A";
+    yield "#BD8633";
+    yield "#705D41";
+  }
+
+  colorGenerator = color();
+
+  const keyGenerator = key();
+
+  function* color() {
+    let color;
+    yield "#F2C98A";
+    yield "#BD8633";
+    yield "#705D41";
+  }
+
+  colorGenerator = color();
 
   tracks.sort((a, b) => {
     if (a.artist.toLowerCase() > b.artist.toLowerCase()) {
@@ -73,14 +93,15 @@ export default function ChartList({ tracks }) {
   const topTen = getTopTen();
 
   return topTen ? (
-    topTen.map((artist) => {
-      const position = positionGenerator.next();
+    topTen.map((artist, index) => {
       return (
         <ScrollView>
-          <Text>{position.value}</Text>
-          <ScrollView horizontal={true}>
-            <ChartEntry key={keyGenerator.next()} artist={artist} />
-          </ScrollView>
+          <ChartEntry
+            position={positionGenerator.next().value}
+            color={colorGenerator.next().value}
+            key={index}
+            artist={artist}
+          />
         </ScrollView>
       );
     })
