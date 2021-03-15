@@ -5,10 +5,12 @@ import { me, logout } from "./store";
 import { Tab } from "./routes";
 
 import React, { Component } from "react";
+import { getHistory } from "./store/playHistory";
 
 class Client extends Component {
-  componentDidMount() {
-    this.props.getMe();
+  async componentDidMount() {
+    await this.props.getMe();
+    await this.props.loadHistory();
   }
 
   render() {
@@ -32,6 +34,7 @@ const mapState = (state) => ({
 
 const mapDispatch = (dispatch) => ({
   getMe: () => dispatch(me()),
+  loadHistory: () => dispatch(getHistory()),
 });
 
 export default connect(mapState, mapDispatch)(Client);

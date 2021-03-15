@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { cos } from "react-native-reanimated";
 import { connect } from "react-redux";
 import { getHistory } from "../store/playHistory";
@@ -20,6 +20,7 @@ class Chart extends Component {
       const album = item.track.album.name;
       const playDate = item.played_at;
       const duration = item.track.duration_ms;
+      const albumImageUrl = item.track.album.images[1].url;
 
       this.setState((state) => ({
         tracks: [
@@ -30,24 +31,25 @@ class Chart extends Component {
             album,
             playDate,
             duration,
+            albumImageUrl,
           },
         ],
       }));
     });
   }
   render() {
-    // track name, artist, album, played_at
-    // use "played at" to keep track of music from a certain day
-    // count how many times the same song of the same artist was played
-    // show a lit of the top 10 songs based on their frequency of play
-
     const { user } = this.props;
+    console.log(this.state.tracks.length);
     return (
-      <View>
+      <ScrollView>
         <Text>Welcome, {user.username}</Text>
         <Text>Your Top Ten:</Text>
-        <ChartList tracks={this.state.tracks} />
-      </View>
+        {this.state.tracks[39] ? (
+          <ChartList tracks={this.state.tracks} />
+        ) : (
+          <Text>Chart Loading</Text>
+        )}
+      </ScrollView>
     );
   }
 }
